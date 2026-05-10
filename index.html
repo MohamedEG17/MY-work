@@ -291,41 +291,67 @@
   .btn-primary:active { transform: translateY(0); }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  /* Entity (Company/Client) cards */
-  .entities { display: flex; flex-direction: column; gap: 16px; }
+  /* Entity (Company/Client) cards - MONOCHROMATIC THEME */
+  .entities { display: flex; flex-direction: column; gap: 18px; }
   .entity-card {
-    background: var(--bg-soft);
-    border: 1px solid var(--border);
+    --c: var(--entity-color, #6366f1);
+    --c-50: color-mix(in srgb, var(--c) 4%, #ffffff);
+    --c-100: color-mix(in srgb, var(--c) 10%, #ffffff);
+    --c-200: color-mix(in srgb, var(--c) 22%, #ffffff);
+    --c-300: color-mix(in srgb, var(--c) 40%, #ffffff);
+    --c-700: color-mix(in srgb, var(--c) 80%, #000000);
+    background: linear-gradient(135deg, var(--c-50) 0%, #ffffff 100%);
+    border: 1px solid color-mix(in srgb, var(--c) 25%, var(--border));
     border-radius: var(--radius-lg);
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: var(--shadow);
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--c) 12%, transparent), var(--shadow-sm);
     position: relative;
+  }
+  body.dark .entity-card {
+    --c-50: color-mix(in srgb, var(--c) 12%, var(--bg-soft));
+    --c-100: color-mix(in srgb, var(--c) 22%, var(--bg-soft));
+    --c-200: color-mix(in srgb, var(--c) 35%, var(--bg-soft));
+    background: linear-gradient(135deg, var(--c-50) 0%, var(--bg-soft) 100%);
+    border-color: color-mix(in srgb, var(--c) 35%, var(--border));
   }
   .entity-card::before {
     content: '';
     position: absolute;
     top: 0; right: 0; bottom: 0;
     width: 5px;
-    background: linear-gradient(180deg, var(--entity-color, #6366f1), color-mix(in srgb, var(--entity-color, #6366f1) 60%, transparent));
+    background: linear-gradient(180deg, var(--c), color-mix(in srgb, var(--c) 50%, transparent));
   }
   .entity-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--c) 22%, transparent), var(--shadow-lg);
   }
   .entity-header {
-    padding: 20px 24px;
+    padding: 22px 26px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    background: linear-gradient(90deg, var(--entity-bg, rgba(99,102,241,0.06)) 0%, transparent 60%);
+    background: linear-gradient(90deg,
+      color-mix(in srgb, var(--c) 18%, #ffffff) 0%,
+      color-mix(in srgb, var(--c) 8%, #ffffff) 50%,
+      color-mix(in srgb, var(--c) 3%, #ffffff) 100%);
     flex-wrap: wrap;
     gap: 14px;
-    transition: background 0.2s;
+    transition: all 0.2s;
+    border-bottom: 1px solid color-mix(in srgb, var(--c) 18%, var(--border));
+  }
+  body.dark .entity-header {
+    background: linear-gradient(90deg,
+      color-mix(in srgb, var(--c) 28%, var(--bg-soft)) 0%,
+      color-mix(in srgb, var(--c) 14%, var(--bg-soft)) 60%,
+      var(--bg-soft) 100%);
   }
   .entity-header:hover {
-    background: linear-gradient(90deg, var(--entity-bg, rgba(99,102,241,0.10)) 0%, transparent 60%);
+    background: linear-gradient(90deg,
+      color-mix(in srgb, var(--c) 24%, #ffffff) 0%,
+      color-mix(in srgb, var(--c) 12%, #ffffff) 50%,
+      color-mix(in srgb, var(--c) 5%, #ffffff) 100%);
   }
   .entity-title-wrap {
     display: flex;
@@ -335,29 +361,38 @@
     min-width: 0;
   }
   .entity-avatar {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, var(--entity-color, #6366f1), color-mix(in srgb, var(--entity-color, #6366f1) 70%, #000));
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--c), color-mix(in srgb, var(--c) 70%, #000));
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
-    font-size: 22px;
+    font-size: 24px;
     flex-shrink: 0;
-    box-shadow: 0 6px 16px color-mix(in srgb, var(--entity-color, #6366f1) 40%, transparent), inset 0 1px 0 rgba(255,255,255,0.2);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--c) 40%, transparent), inset 0 1px 0 rgba(255,255,255,0.25);
     letter-spacing: -0.02em;
     position: relative;
+    overflow: hidden;
+  }
+  .entity-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
   }
   .entity-avatar::after {
     content: '';
     position: absolute;
     inset: 1px;
-    border-radius: 13px;
+    border-radius: 15px;
     background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent 50%);
     pointer-events: none;
   }
+  .entity-avatar.has-logo { background: white; padding: 6px; }
+  .entity-avatar.has-logo::after { display: none; }
   .entity-name {
     font-size: 19px;
     font-weight: 800;
@@ -426,13 +461,13 @@
   }
 
   .tasks-container {
-    padding: 4px 24px 22px 24px;
+    padding: 4px 26px 24px 26px;
     display: none;
-    border-top: 1px solid var(--border);
-    background: var(--bg-subtle);
+    background: color-mix(in srgb, var(--c) 2%, #ffffff);
     margin-top: 0;
   }
-  .entity-card.expanded .tasks-container { display: block; padding-top: 18px; }
+  body.dark .tasks-container { background: color-mix(in srgb, var(--c) 8%, var(--bg-subtle)); }
+  .entity-card.expanded .tasks-container { display: block; padding-top: 20px; }
   .entity-card.expanded .toggle-icon { transform: rotate(180deg); }
   .toggle-icon { transition: transform 0.3s; display: inline-block; font-size: 11px; }
 
@@ -441,24 +476,36 @@
     gap: 14px;
     align-items: flex-start;
     padding: 16px 18px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: linear-gradient(135deg, #ffffff 0%, color-mix(in srgb, var(--c) 4%, #ffffff) 100%);
+    border: 1px solid color-mix(in srgb, var(--c) 18%, var(--border));
+    border-right: 3px solid color-mix(in srgb, var(--c) 50%, transparent);
     border-radius: 14px;
     margin-bottom: 10px;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 6px color-mix(in srgb, var(--c) 8%, transparent);
+  }
+  body.dark .task {
+    background: linear-gradient(135deg, var(--bg-card) 0%, color-mix(in srgb, var(--c) 12%, var(--bg-card)) 100%);
+    border-color: color-mix(in srgb, var(--c) 25%, var(--border));
   }
   .task:hover {
-    border-color: var(--entity-color, var(--accent));
+    border-color: var(--c);
+    border-right-color: var(--c);
     transform: translateX(-3px);
-    box-shadow: var(--shadow);
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--c) 18%, transparent);
   }
-  .task.completed { opacity: 0.65; background: var(--bg-subtle); }
+  .task.completed {
+    opacity: 0.6;
+    background: color-mix(in srgb, var(--c) 6%, #f8fafc);
+  }
+  body.dark .task.completed { background: color-mix(in srgb, var(--c) 10%, var(--bg-subtle)); }
   .task.completed .task-title { text-decoration: line-through; color: var(--text-muted); }
   .task.overdue {
-    border-color: rgba(239,68,68,0.4);
-    background: linear-gradient(90deg, rgba(239,68,68,0.04), transparent);
+    border-color: rgba(239,68,68,0.5);
+    border-right-color: rgba(239,68,68,0.7);
+    background: linear-gradient(135deg, rgba(254,226,226,0.4) 0%, #ffffff 100%);
   }
+  body.dark .task.overdue { background: linear-gradient(135deg, rgba(239,68,68,0.08), var(--bg-card)); }
 
   .task-checkbox {
     width: 24px;
@@ -538,9 +585,14 @@
     border-color: #6ee7b7;
   }
   .badge.price {
-    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-    color: #3730a3;
-    border-color: #a5b4fc;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--c) 18%, #ffffff), color-mix(in srgb, var(--c) 30%, #ffffff));
+    color: color-mix(in srgb, var(--c) 75%, #000000);
+    border-color: color-mix(in srgb, var(--c) 40%, #ffffff);
+  }
+  body.dark .badge.price {
+    background: color-mix(in srgb, var(--c) 22%, var(--bg-subtle));
+    color: color-mix(in srgb, var(--c) 60%, #ffffff);
+    border-color: color-mix(in srgb, var(--c) 40%, transparent);
   }
   .badge.priority-high {
     background: linear-gradient(135deg, #fee2e2, #fecaca);
@@ -1014,8 +1066,12 @@ create table if not exists entities (
   type text not null check (type in ('company','client')),
   color text,
   color_index int,
+  logo text,
   created_at timestamptz default now()
 );
+
+-- لو الجدول موجود بالفعل من قبل بدون عمود logo نفّذ ده:
+alter table entities add column if not exists logo text;
 
 create table if not exists tasks (
   id uuid primary key default gen_random_uuid(),
@@ -1149,7 +1205,7 @@ function loadLocalCache() {
 }
 
 // ============= DATA OPERATIONS =============
-async function addEntity(type, name) {
+async function addEntity(type, name, logo) {
   const list = type === 'company' ? state.data.fulltime : state.data.freelance;
   const colorIndex = list.length % PALETTE.length;
   const palette = PALETTE[colorIndex];
@@ -1159,12 +1215,13 @@ async function addEntity(type, name) {
     type,
     color: palette.color,
     color_index: colorIndex,
+    logo: logo || null,
     tasks: [],
     created_at: new Date().toISOString(),
   };
   if (state.supabase) {
     const { data, error } = await state.supabase.from('entities').insert({
-      name, type, color: palette.color, color_index: colorIndex
+      name, type, color: palette.color, color_index: colorIndex, logo: logo || null
     }).select().single();
     if (error) { toast('خطأ: '+error.message, 'error'); return; }
     entity.id = data.id;
@@ -1177,13 +1234,13 @@ async function addEntity(type, name) {
   toast(type==='company' ? 'اتضافت الشركة ✅' : 'اتضاف العميل ✅');
 }
 
-async function updateEntity(id, name) {
+async function updateEntity(id, updates) {
   const all = [...state.data.fulltime, ...state.data.freelance];
   const ent = all.find(e => e.id === id);
   if (!ent) return;
-  ent.name = name;
+  Object.assign(ent, updates);
   if (state.supabase) {
-    await state.supabase.from('entities').update({ name }).eq('id', id);
+    await state.supabase.from('entities').update(updates).eq('id', id);
   }
   saveLocalCache();
   renderAll();
@@ -1335,11 +1392,16 @@ function renderEntities(kind) {
     const palette = PALETTE[ent.color_index ?? 0] || PALETTE[0];
     const expanded = (search || filter !== 'all') ? true : ent._expanded !== false;
 
+    const avatarContent = ent.logo
+      ? `<img src="${ent.logo}" alt="${escapeHtml(ent.name)}">`
+      : escapeHtml(initial);
+    const avatarClass = ent.logo ? 'entity-avatar has-logo' : 'entity-avatar';
+
     return `
       <div class="entity-card ${expanded ? 'expanded' : ''}" data-id="${ent.id}" style="--entity-color:${palette.color};--entity-bg:${palette.bg}">
         <div class="entity-header" data-toggle="${ent.id}">
           <div class="entity-title-wrap">
-            <div class="entity-avatar">${escapeHtml(initial)}</div>
+            <div class="${avatarClass}">${avatarContent}</div>
             <div style="flex:1;min-width:0;">
               <div class="entity-name">${escapeHtml(ent.name)}</div>
               <div class="entity-meta">
@@ -1486,12 +1548,30 @@ const ui = {
 
   _showEntityModal(type, existing) {
     const isCompany = type === 'company';
+    const currentLogo = existing && existing.logo ? existing.logo : '';
     showModal({
-      title: existing ? 'تعديل الاسم' : (isCompany ? 'إضافة شركة جديدة' : 'إضافة عميل جديد'),
+      title: existing ? 'تعديل البيانات' : (isCompany ? 'إضافة شركة جديدة' : 'إضافة عميل جديد'),
       body: `
         <div class="form-group">
           <label>${isCompany ? 'اسم الشركة' : 'اسم العميل'}</label>
           <input type="text" id="entName" value="${existing ? escapeHtml(existing.name) : ''}" placeholder="${isCompany ? 'مثلاً: شركة كذا' : 'مثلاً: أحمد محمد'}" autofocus>
+        </div>
+        <div class="form-group">
+          <label>اللوجو (اختياري)</label>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div id="logoPreview" style="width:64px;height:64px;border-radius:14px;border:2px dashed var(--border-strong);display:flex;align-items:center;justify-content:center;background:var(--bg-subtle);overflow:hidden;flex-shrink:0;">
+              ${currentLogo ? `<img src="${currentLogo}" style="width:100%;height:100%;object-fit:cover;">` : '<span style="font-size:24px;opacity:0.4;">🖼️</span>'}
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+              <label class="btn-secondary" style="text-align:center;cursor:pointer;flex:none;padding:10px;">
+                📁 رفع لوجو من جهازك
+                <input type="file" id="logoFile" accept="image/*" style="display:none;">
+              </label>
+              ${currentLogo ? `<button type="button" class="btn-secondary" id="removeLogoBtn" style="padding:8px;font-size:12px;">🗑️ إزالة اللوجو</button>` : ''}
+            </div>
+          </div>
+          <input type="hidden" id="entLogo" value="${currentLogo}">
+          <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">يفضّل صورة مربعة، PNG أو SVG. الحجم الأقصى 500KB.</div>
         </div>
       `,
       actions: [
@@ -1499,13 +1579,57 @@ const ui = {
         { label: existing ? 'حفظ' : 'إضافة', class: 'btn-primary flex', onClick: async () => {
           const name = $('#entName').value.trim();
           if (!name) return toast('اكتب اسم', 'error');
-          if (existing) await updateEntity(existing.id, name);
-          else await addEntity(type, name);
+          const logo = $('#entLogo').value || null;
+          if (existing) await updateEntity(existing.id, { name, logo });
+          else await addEntity(type, name, logo);
           closeModal();
         }}
       ]
     });
     setTimeout(() => $('#entName')?.focus(), 50);
+
+    // Wire up logo upload
+    const fileInput = $('#logoFile');
+    if (fileInput) {
+      fileInput.onchange = e => {
+        const f = e.target.files[0];
+        if (!f) return;
+        if (f.size > 500 * 1024) return toast('الصورة كبيرة (الحد 500KB)', 'error');
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const dataUrl = ev.target.result;
+          // Resize raster images to ~256px max
+          if (f.type !== 'image/svg+xml') {
+            const img = new Image();
+            img.onload = () => {
+              const max = 256;
+              const scale = Math.min(1, max / Math.max(img.width, img.height));
+              const w = Math.round(img.width * scale);
+              const h = Math.round(img.height * scale);
+              const canvas = document.createElement('canvas');
+              canvas.width = w; canvas.height = h;
+              canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+              const out = canvas.toDataURL(f.type === 'image/png' ? 'image/png' : 'image/jpeg', 0.9);
+              $('#entLogo').value = out;
+              $('#logoPreview').innerHTML = `<img src="${out}" style="width:100%;height:100%;object-fit:cover;">`;
+            };
+            img.src = dataUrl;
+          } else {
+            $('#entLogo').value = dataUrl;
+            $('#logoPreview').innerHTML = `<img src="${dataUrl}" style="width:100%;height:100%;object-fit:cover;">`;
+          }
+        };
+        reader.readAsDataURL(f);
+      };
+    }
+    const removeBtn = $('#removeLogoBtn');
+    if (removeBtn) {
+      removeBtn.onclick = () => {
+        $('#entLogo').value = '';
+        $('#logoPreview').innerHTML = '<span style="font-size:24px;opacity:0.4;">🖼️</span>';
+        removeBtn.style.display = 'none';
+      };
+    }
   },
 
   editEntity(id) {

@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متابع الشغل والتاسكات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f6f7fb;
+    --bg-gradient: radial-gradient(1200px 600px at 90% -10%, #eef2ff 0%, transparent 60%),
+                   radial-gradient(900px 500px at -10% 20%, #fdf2f8 0%, transparent 60%),
+                   radial-gradient(700px 500px at 50% 100%, #ecfeff 0%, transparent 60%),
+                   #f6f7fb;
+    --bg-soft: #ffffff;
+    --bg-card: #ffffff;
+    --bg-subtle: #f8fafc;
+    --border: #e6e9f2;
+    --border-strong: #d1d5e0;
+    --text: #0f172a;
+    --text-soft: #334155;
+    --text-muted: #64748b;
+    --accent: #6366f1;
+    --accent-hover: #4f46e5;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --radius: 16px;
+    --radius-lg: 20px;
+    --shadow-sm: 0 1px 2px rgba(15,23,42,0.04), 0 1px 3px rgba(15,23,42,0.04);
+    --shadow: 0 4px 12px rgba(15,23,42,0.04), 0 2px 6px rgba(15,23,42,0.04);
+    --shadow-lg: 0 12px 32px rgba(15,23,42,0.08), 0 4px 12px rgba(15,23,42,0.04);
+    --shadow-xl: 0 24px 48px rgba(15,23,42,0.12), 0 8px 16px rgba(15,23,42,0.06);
+  }
+  body.dark {
+    --bg: #0b1020;
+    --bg-gradient: radial-gradient(1200px 600px at 90% -10%, #1e1b4b 0%, transparent 60%),
+                   radial-gradient(900px 500px at -10% 20%, #3b0764 0%, transparent 60%),
+                   #0b1020;
+    --bg-soft: #131a2e;
+    --bg-card: #182040;
+    --bg-subtle: #0f1530;
+    --border: #232b4d;
+    --border-strong: #2f3865;
+    --text: #f1f5f9;
+    --text-soft: #cbd5e1;
+    --text-muted: #94a3b8;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+    --shadow: 0 4px 16px rgba(0,0,0,0.35);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,0.5);
+    --shadow-xl: 0 24px 48px rgba(0,0,0,0.6);
+  }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background 0.4s, color 0.3s;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  .app {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 24px 20px 60px 20px;
+  }
+  /* Header */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .logo-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 8px 24px rgba(99,102,241,0.35), 0 2px 6px rgba(99,102,241,0.2);
+    position: relative;
+  }
+  .logo-icon::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: 15px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.25), transparent 50%);
+    pointer-events: none;
+  }
+  .logo-text { line-height: 1.2; }
+  .header-actions { display: flex; gap: 8px; }
+  .icon-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    color: var(--text-soft);
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+  }
+  .icon-btn:hover {
+    background: var(--bg-card);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    color: var(--text);
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    background: var(--bg-soft);
+    padding: 6px;
+    border-radius: 16px;
+    margin-bottom: 28px;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(8px);
+  }
+  .tab {
+    flex: 1;
+    min-width: 130px;
+    padding: 12px 18px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
+  .tab.active {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    box-shadow: 0 8px 20px rgba(99,102,241,0.35), 0 2px 4px rgba(99,102,241,0.2);
+    transform: translateY(-1px);
+  }
+  .tab:not(.active):hover { color: var(--text); background: var(--bg-subtle); }
+
+  /* Stats bar */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s;
+  }
+  .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    border-color: var(--border-strong);
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 100%; height: 3px;
+    background: var(--accent-color, var(--accent));
+  }
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    top: -30px; left: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: var(--accent-color, var(--accent));
+    opacity: 0.06;
+  }
+  .stat-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .stat-value.green { color: #059669; }
+  .stat-value.red { color: #dc2626; }
+  .stat-value.yellow { color: #d97706; }
+  .stat-value.blue { color: #2563eb; }
+  body.dark .stat-value.green { color: #34d399; }
+  body.dark .stat-value.red { color: #f87171; }
+  body.dark .stat-value.yellow { color: #fbbf24; }
+  body.dark .stat-value.blue { color: #60a5fa; }
+
+  /* Toolbar */
+  .toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .search-box {
+    flex: 1;
+    min-width: 220px;
+    padding: 13px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+  }
+  .search-box::placeholder { color: var(--text-muted); }
+  .search-box:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(99,102,241,0.12);
+  }
+  .filter-select {
+    padding: 13px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-sm);
+  }
+  .filter-select:hover { border-color: var(--border-strong); }
+  .filter-select:focus { outline: none; border-color: var(--accent); }
+  .btn-primary {
+    padding: 13px 24px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 6px 16px rgba(99,102,241,0.32), 0 2px 4px rgba(99,102,241,0.2);
+    letter-spacing: -0.01em;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(99,102,241,0.4), 0 4px 8px rgba(99,102,241,0.25);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Entity (Company/Client) cards */
+  .entities { display: flex; flex-direction: column; gap: 16px; }
+  .entity-card {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .entity-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 5px;
+    background: linear-gradient(180deg, var(--entity-color, #6366f1), color-mix(in srgb, var(--entity-color, #6366f1) 60%, transparent));
+  }
+  .entity-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .entity-header {
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--entity-bg, rgba(99,102,241,0.06)) 0%, transparent 60%);
+    flex-wrap: wrap;
+    gap: 14px;
+    transition: background 0.2s;
+  }
+  .entity-header:hover {
+    background: linear-gradient(90deg, var(--entity-bg, rgba(99,102,241,0.10)) 0%, transparent 60%);
+  }
+  .entity-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+  }
+  .entity-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--entity-color, #6366f1), color-mix(in srgb, var(--entity-color, #6366f1) 70%, #000));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 22px;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--entity-color, #6366f1) 40%, transparent), inset 0 1px 0 rgba(255,255,255,0.2);
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+  .entity-avatar::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: 13px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent 50%);
+    pointer-events: none;
+  }
+  .entity-name {
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    word-break: break-word;
+    letter-spacing: -0.02em;
+  }
+  .entity-meta {
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-weight: 600;
+  }
+  .entity-meta span { display: inline-flex; align-items: center; gap: 4px; }
+  .entity-actions { display: flex; gap: 6px; align-items: center; }
+  .entity-actions button {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .entity-actions button:hover {
+    color: var(--text);
+    background: var(--bg-subtle);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+  }
+  .entity-actions .delete-btn:hover {
+    color: var(--danger);
+    border-color: var(--danger);
+    background: rgba(239,68,68,0.08);
+  }
+
+  .progress-mini {
+    width: 90px;
+    height: 8px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-mini-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--entity-color, #6366f1), color-mix(in srgb, var(--entity-color, #6366f1) 70%, #fff));
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-mini-fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
+  }
+
+  .tasks-container {
+    padding: 4px 24px 22px 24px;
+    display: none;
+    border-top: 1px solid var(--border);
+    background: var(--bg-subtle);
+    margin-top: 0;
+  }
+  .entity-card.expanded .tasks-container { display: block; padding-top: 18px; }
+  .entity-card.expanded .toggle-icon { transform: rotate(180deg); }
+  .toggle-icon { transition: transform 0.3s; display: inline-block; font-size: 11px; }
+
+  .task {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+  }
+  .task:hover {
+    border-color: var(--entity-color, var(--accent));
+    transform: translateX(-3px);
+    box-shadow: var(--shadow);
+  }
+  .task.completed { opacity: 0.65; background: var(--bg-subtle); }
+  .task.completed .task-title { text-decoration: line-through; color: var(--text-muted); }
+  .task.overdue {
+    border-color: rgba(239,68,68,0.4);
+    background: linear-gradient(90deg, rgba(239,68,68,0.04), transparent);
+  }
+
+  .task-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border-strong);
+    border-radius: 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--bg-soft);
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .task-checkbox:hover {
+    border-color: var(--success);
+    transform: scale(1.1);
+  }
+  .task-checkbox.checked {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-color: #059669;
+    box-shadow: 0 4px 10px rgba(16,185,129,0.35);
+  }
+  .task-content { flex: 1; min-width: 0; }
+  .task-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    word-break: break-word;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .task-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    word-break: break-word;
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+  .task-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 12px;
+  }
+  .badge {
+    padding: 5px 11px;
+    border-radius: 8px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    letter-spacing: 0.01em;
+  }
+  .badge.deadline.soon {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+    border-color: #fcd34d;
+  }
+  .badge.deadline.overdue {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    color: #991b1b;
+    border-color: #fca5a5;
+  }
+  .badge.deadline.ok {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
+    border-color: #6ee7b7;
+  }
+  .badge.price {
+    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+    color: #3730a3;
+    border-color: #a5b4fc;
+  }
+  .badge.priority-high {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    color: #991b1b;
+    border-color: #fca5a5;
+  }
+  .badge.priority-medium {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+    border-color: #fcd34d;
+  }
+  .badge.priority-low {
+    background: var(--bg-subtle);
+    color: var(--text-muted);
+  }
+
+  body.dark .badge.deadline.soon { background: rgba(245,158,11,0.15); color: #fbbf24; border-color: rgba(245,158,11,0.3); }
+  body.dark .badge.deadline.overdue { background: rgba(239,68,68,0.15); color: #f87171; border-color: rgba(239,68,68,0.3); }
+  body.dark .badge.deadline.ok { background: rgba(16,185,129,0.15); color: #34d399; border-color: rgba(16,185,129,0.3); }
+  body.dark .badge.price { background: rgba(99,102,241,0.15); color: #a5b4fc; border-color: rgba(99,102,241,0.3); }
+  body.dark .badge.priority-high { background: rgba(239,68,68,0.15); color: #f87171; border-color: rgba(239,68,68,0.3); }
+  body.dark .badge.priority-medium { background: rgba(245,158,11,0.15); color: #fbbf24; border-color: rgba(245,158,11,0.3); }
+
+  .task-actions {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .task:hover .task-actions { opacity: 1; }
+  .task-actions button {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .task-actions button:hover { background: var(--bg-subtle); color: var(--text); }
+  .task-actions .delete:hover { color: var(--danger); background: rgba(239,68,68,0.1); }
+
+  .add-task-btn {
+    width: 100%;
+    padding: 14px;
+    border: 2px dashed var(--border-strong);
+    background: transparent;
+    color: var(--text-muted);
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+  .add-task-btn:hover {
+    border-color: var(--entity-color, var(--accent));
+    color: var(--entity-color, var(--accent));
+    background: var(--bg-soft);
+  }
+
+  /* Empty state */
+  .empty {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-muted);
+    background: var(--bg-soft);
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius-lg);
+  }
+  .empty-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    opacity: 0.7;
+    display: inline-block;
+    animation: floaty 4s ease-in-out infinite;
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .empty h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: var(--text);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .empty p { font-size: 14px; margin-bottom: 20px; }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal-backdrop.active { display: flex; }
+  .modal {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 32px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @keyframes slideUp {
+    from { transform: translateY(20px) scale(0.96); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+  }
+  .modal h2 {
+    margin-bottom: 22px;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-soft);
+    letter-spacing: 0.01em;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-subtle);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--bg-soft);
+    box-shadow: 0 0 0 4px rgba(99,102,241,0.12);
+  }
+  .form-group textarea { min-height: 100px; resize: vertical; line-height: 1.6; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 24px; }
+  .btn-secondary {
+    padding: 13px 24px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-subtle);
+    color: var(--text);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    flex: 1;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: var(--bg-card); border-color: var(--border-strong); }
+  .btn-primary.flex { flex: 1; }
+  .btn-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 6px 16px rgba(239,68,68,0.32) !important;
+  }
+  .btn-danger:hover { box-shadow: 0 10px 24px rgba(239,68,68,0.4) !important; }
+
+  /* Settings */
+  .settings-section {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+  }
+  .settings-section h3 {
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .settings-section p { color: var(--text-soft); font-size: 14px; line-height: 1.8; margin-bottom: 12px; }
+  .settings-section a { color: var(--accent); font-weight: 600; }
+  .code-block {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    white-space: pre;
+    overflow-x: auto;
+    direction: ltr;
+    text-align: left;
+    margin-bottom: 12px;
+    color: #cbd5e1;
+    line-height: 1.6;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-right: 4px solid var(--success);
+    padding: 14px 24px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-12px); }
+  .toast.error { border-right-color: var(--danger); }
+
+  .connection-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 11px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .connection-status.connected {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+  }
+  .connection-status.disconnected {
+    background: var(--bg-subtle);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  body.dark .connection-status.connected { background: rgba(16,185,129,0.15); color: #34d399; border-color: rgba(16,185,129,0.3); }
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 5px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  @media (max-width: 600px) {
+    .app { padding: 12px; }
+    .logo { font-size: 18px; }
+    .logo-icon { width: 38px; height: 38px; }
+    .entity-header { padding: 14px; }
+    .tasks-container { padding: 0 14px 14px 14px; }
+    .modal { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">
+      <div class="logo-icon">📋</div>
+      <div class="logo-text">
+        <div>متابع شغلي</div>
+        <div id="connectionStatus" class="connection-status disconnected" style="margin-top:6px;">
+          <span class="dot"></span>
+          <span>وضع محلي</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="themeBtn" title="تبديل المظهر">🌙</button>
+      <button class="icon-btn" id="exportBtn" title="تصدير البيانات">⬇️</button>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="fulltime">💼 شغل دوام كامل</button>
+    <button class="tab" data-tab="freelance">💸 فري لانس</button>
+    <button class="tab" data-tab="dashboard">📊 ملخص شامل</button>
+    <button class="tab" data-tab="settings">⚙️ الإعدادات</button>
+  </div>
+
+  <!-- FULL-TIME TAB -->
+  <div class="tab-content" id="tab-fulltime">
+    <div class="stats" id="statsFulltime"></div>
+    <div class="toolbar">
+      <input type="text" class="search-box" id="searchFulltime" placeholder="🔍 ابحث في الشركات أو التاسكات...">
+      <select class="filter-select" id="filterFulltime">
+        <option value="all">كل التاسكات</option>
+        <option value="pending">المتبقي</option>
+        <option value="completed">المنجز</option>
+        <option value="overdue">المتأخر</option>
+        <option value="today">المستحق اليوم</option>
+        <option value="week">خلال أسبوع</option>
+      </select>
+      <button class="btn-primary" id="addCompanyBtn">+ إضافة شركة</button>
+    </div>
+    <div class="entities" id="companiesList"></div>
+  </div>
+
+  <!-- FREELANCE TAB -->
+  <div class="tab-content" id="tab-freelance" style="display:none;">
+    <div class="stats" id="statsFreelance"></div>
+    <div class="toolbar">
+      <input type="text" class="search-box" id="searchFreelance" placeholder="🔍 ابحث في العملاء أو التاسكات...">
+      <select class="filter-select" id="filterFreelance">
+        <option value="all">كل التاسكات</option>
+        <option value="pending">المتبقي</option>
+        <option value="completed">المنجز</option>
+        <option value="overdue">المتأخر</option>
+        <option value="today">المستحق اليوم</option>
+        <option value="week">خلال أسبوع</option>
+      </select>
+      <button class="btn-primary" id="addClientBtn">+ إضافة عميل</button>
+    </div>
+    <div class="entities" id="clientsList"></div>
+  </div>
+
+  <!-- DASHBOARD TAB -->
+  <div class="tab-content" id="tab-dashboard" style="display:none;">
+    <div class="stats" id="statsOverall"></div>
+    <div class="settings-section">
+      <h3>📅 تاسكات قريبة (الأسبوع الجاي)</h3>
+      <div id="upcomingTasks"></div>
+    </div>
+    <div class="settings-section">
+      <h3>🚨 تاسكات متأخرة</h3>
+      <div id="overdueTasks"></div>
+    </div>
+    <div class="settings-section">
+      <h3>💰 أرباح الفري لانس (الشهر الحالي)</h3>
+      <div id="monthlyEarnings" style="font-size:32px;font-weight:800;color:var(--success)"></div>
+      <div id="earningsBreakdown" style="margin-top:12px;font-size:14px;color:var(--text-muted)"></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS TAB -->
+  <div class="tab-content" id="tab-settings" style="display:none;">
+    <div class="settings-section">
+      <h3>🔌 إعدادات قاعدة البيانات (Supabase)</h3>
+      <p>اعمل مشروع على <a href="https://supabase.com" target="_blank" style="color:var(--accent)">supabase.com</a> وحط الـ URL والـ anon key هنا. البيانات بتتحفظ تلقائي في المتصفح فعشان كدا اللي اتسجل لازم تدخله مرة واحدة بس.</p>
+      <div class="form-group">
+        <label>Supabase URL</label>
+        <input type="text" id="supabaseUrl" placeholder="https://xxxxx.supabase.co">
+      </div>
+      <div class="form-group">
+        <label>Supabase Anon Key</label>
+        <input type="text" id="supabaseKey" placeholder="eyJhbGc...">
+      </div>
+      <button class="btn-primary" id="saveConfigBtn">💾 حفظ والاتصال</button>
+    </div>
+
+    <div class="settings-section">
+      <h3>🗄️ خطوات إعداد قاعدة البيانات</h3>
+      <p>1) ادخل على مشروعك في Supabase → SQL Editor → نفذ الكود ده مرة واحدة:</p>
+      <div class="code-block" id="sqlCode"></div>
+      <button class="btn-secondary" id="copySqlBtn" style="flex:none;">📋 نسخ الكود</button>
+      <p style="margin-top:16px;">2) من Settings → API انسخ الـ Project URL والـ anon public key وحطهم فوق.</p>
+      <p>3) اضغط "حفظ والاتصال" والصفحة هتبدأ تحفظ كل حاجة في الـ database مباشرة.</p>
+    </div>
+
+    <div class="settings-section">
+      <h3>🌐 رفع الصفحة على دومين مجاني</h3>
+      <p>الخيارات السهلة:</p>
+      <p>• <strong>Netlify Drop:</strong> ادخل على <a href="https://app.netlify.com/drop" target="_blank" style="color:var(--accent)">app.netlify.com/drop</a> واسحب الملف ده. خلاص بقيت عندك دومين مجاني.</p>
+      <p>• <strong>Vercel:</strong> ارفع على GitHub → اربط مع Vercel.</p>
+      <p>• <strong>GitHub Pages:</strong> ارفع الملف في repo وفعّل Pages من الإعدادات.</p>
+      <p>• <strong>Cloudflare Pages:</strong> برضه مجاني وسريع.</p>
+    </div>
+
+    <div class="settings-section">
+      <h3>💾 نسخ احتياطي</h3>
+      <p>تقدر تصدر كل بياناتك كملف JSON وتستوردها مرة تانية لو احتجت.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn-secondary" id="exportJsonBtn" style="flex:none;">⬇️ تصدير JSON</button>
+        <label class="btn-secondary" style="flex:none;cursor:pointer;">
+          ⬆️ استيراد JSON
+          <input type="file" id="importJsonInput" accept=".json" style="display:none;">
+        </label>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <h2 id="modalTitle"></h2>
+    <div id="modalBody"></div>
+    <div class="modal-actions" id="modalActions"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+'use strict';
+
+// ============= STATE =============
+const state = {
+  supabase: null,
+  connected: false,
+  currentTab: 'fulltime',
+  data: {
+    fulltime: [], // companies with .tasks
+    freelance: [], // clients with .tasks
+  },
+  filters: { fulltime: 'all', freelance: 'all' },
+  searches: { fulltime: '', freelance: '' },
+};
+
+// 14 nice color themes (auto-assigned in order)
+const PALETTE = [
+  { color: '#6366f1', bg: 'rgba(99,102,241,0.08)' },   // indigo
+  { color: '#ec4899', bg: 'rgba(236,72,153,0.08)' },   // pink
+  { color: '#10b981', bg: 'rgba(16,185,129,0.08)' },   // green
+  { color: '#f59e0b', bg: 'rgba(245,158,11,0.08)' },   // amber
+  { color: '#3b82f6', bg: 'rgba(59,130,246,0.08)' },   // blue
+  { color: '#ef4444', bg: 'rgba(239,68,68,0.08)' },    // red
+  { color: '#8b5cf6', bg: 'rgba(139,92,246,0.08)' },   // violet
+  { color: '#14b8a6', bg: 'rgba(20,184,166,0.08)' },   // teal
+  { color: '#f97316', bg: 'rgba(249,115,22,0.08)' },   // orange
+  { color: '#06b6d4', bg: 'rgba(6,182,212,0.08)' },    // cyan
+  { color: '#84cc16', bg: 'rgba(132,204,22,0.08)' },   // lime
+  { color: '#d946ef', bg: 'rgba(217,70,239,0.08)' },   // fuchsia
+  { color: '#0ea5e9', bg: 'rgba(14,165,233,0.08)' },   // sky
+  { color: '#a855f7', bg: 'rgba(168,85,247,0.08)' },   // purple
+];
+
+// ============= SQL SETUP =============
+const SQL_SETUP = `-- شغل ده مرة واحدة في Supabase SQL Editor
+
+create table if not exists entities (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  type text not null check (type in ('company','client')),
+  color text,
+  color_index int,
+  created_at timestamptz default now()
+);
+
+create table if not exists tasks (
+  id uuid primary key default gen_random_uuid(),
+  entity_id uuid references entities(id) on delete cascade,
+  title text not null,
+  description text,
+  deadline date,
+  priority text default 'medium' check (priority in ('low','medium','high')),
+  price numeric,
+  completed boolean default false,
+  completed_at timestamptz,
+  created_at timestamptz default now()
+);
+
+-- مهم: لو هتستخدم anon key بس وعايز كل حد يدخل صفحته يشوف بياناته:
+-- اعمل auth أو سيب الـ RLS مقفول مع anon key خاص بيك (المشروع شخصي)
+alter table entities enable row level security;
+alter table tasks enable row level security;
+
+create policy "allow all entities" on entities for all using (true) with check (true);
+create policy "allow all tasks" on tasks for all using (true) with check (true);
+`;
+
+// ============= UTILS =============
+const $ = sel => document.querySelector(sel);
+const $$ = sel => document.querySelectorAll(sel);
+const uid = () => 'local-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+const escapeHtml = s => (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function toast(msg, type = 'success') {
+  const el = $('#toast');
+  el.textContent = msg;
+  el.className = 'toast show ' + (type === 'error' ? 'error' : '');
+  setTimeout(() => el.className = 'toast', 2500);
+}
+
+function daysUntil(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr);
+  d.setHours(0,0,0,0);
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  return Math.ceil((d - today) / (1000*60*60*24));
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('ar-EG', { year:'numeric', month:'short', day:'numeric' });
+}
+
+function deadlineBadge(deadline, completed) {
+  if (!deadline) return '';
+  if (completed) return `<span class="badge deadline">📅 ${formatDate(deadline)}</span>`;
+  const days = daysUntil(deadline);
+  let cls = 'ok', label = formatDate(deadline);
+  if (days < 0) { cls = 'overdue'; label = `متأخر ${Math.abs(days)} يوم`; }
+  else if (days === 0) { cls = 'soon'; label = 'النهارده'; }
+  else if (days === 1) { cls = 'soon'; label = 'بكرة'; }
+  else if (days <= 3) { cls = 'soon'; label = `بعد ${days} أيام`; }
+  else if (days <= 7) { cls = 'soon'; label = `بعد ${days} أيام`; }
+  else label = formatDate(deadline);
+  return `<span class="badge deadline ${cls}">📅 ${label}</span>`;
+}
+
+function priorityBadge(p) {
+  if (!p || p === 'medium') return '';
+  const labels = { high: '🔥 عاجل', low: '🌱 عادي' };
+  return `<span class="badge priority-${p}">${labels[p]}</span>`;
+}
+
+function priceBadge(price) {
+  if (!price) return '';
+  return `<span class="badge price">💵 ${Number(price).toLocaleString('ar-EG')}</span>`;
+}
+
+// ============= SUPABASE =============
+function loadConfig() {
+  return {
+    url: localStorage.getItem('sb_url') || '',
+    key: localStorage.getItem('sb_key') || '',
+  };
+}
+
+async function initSupabase() {
+  const { url, key } = loadConfig();
+  $('#supabaseUrl').value = url;
+  $('#supabaseKey').value = key;
+  if (!url || !key) { setConnected(false); return; }
+  try {
+    state.supabase = window.supabase.createClient(url, key);
+    // Quick ping
+    const { error } = await state.supabase.from('entities').select('id').limit(1);
+    if (error) throw error;
+    setConnected(true);
+    await loadAllFromDb();
+  } catch (e) {
+    console.error(e);
+    setConnected(false);
+    toast('تعذر الاتصال بـ Supabase: ' + e.message, 'error');
+  }
+}
+
+function setConnected(c) {
+  state.connected = c;
+  const el = $('#connectionStatus');
+  el.className = 'connection-status ' + (c ? 'connected' : 'disconnected');
+  el.innerHTML = `<span class="dot"></span><span>${c ? 'متصل بـ Supabase' : 'وضع محلي'}</span>`;
+}
+
+async function loadAllFromDb() {
+  if (!state.supabase) return;
+  const { data: entities, error: e1 } = await state.supabase.from('entities').select('*').order('created_at');
+  const { data: tasks, error: e2 } = await state.supabase.from('tasks').select('*').order('created_at');
+  if (e1 || e2) { toast('فشل تحميل البيانات', 'error'); return; }
+  state.data.fulltime = (entities||[]).filter(e=>e.type==='company').map(e => ({...e, tasks: (tasks||[]).filter(t=>t.entity_id===e.id)}));
+  state.data.freelance = (entities||[]).filter(e=>e.type==='client').map(e => ({...e, tasks: (tasks||[]).filter(t=>t.entity_id===e.id)}));
+  saveLocalCache();
+  renderAll();
+}
+
+// ============= LOCAL CACHE (works without Supabase too) =============
+function saveLocalCache() {
+  localStorage.setItem('cache_data', JSON.stringify(state.data));
+}
+function loadLocalCache() {
+  try {
+    const raw = localStorage.getItem('cache_data');
+    if (raw) state.data = JSON.parse(raw);
+  } catch {}
+}
+
+// ============= DATA OPERATIONS =============
+async function addEntity(type, name) {
+  const list = type === 'company' ? state.data.fulltime : state.data.freelance;
+  const colorIndex = list.length % PALETTE.length;
+  const palette = PALETTE[colorIndex];
+  const entity = {
+    id: uid(),
+    name,
+    type,
+    color: palette.color,
+    color_index: colorIndex,
+    tasks: [],
+    created_at: new Date().toISOString(),
+  };
+  if (state.supabase) {
+    const { data, error } = await state.supabase.from('entities').insert({
+      name, type, color: palette.color, color_index: colorIndex
+    }).select().single();
+    if (error) { toast('خطأ: '+error.message, 'error'); return; }
+    entity.id = data.id;
+    entity.created_at = data.created_at;
+  }
+  if (type === 'company') state.data.fulltime.push(entity);
+  else state.data.freelance.push(entity);
+  saveLocalCache();
+  renderAll();
+  toast(type==='company' ? 'اتضافت الشركة ✅' : 'اتضاف العميل ✅');
+}
+
+async function updateEntity(id, name) {
+  const all = [...state.data.fulltime, ...state.data.freelance];
+  const ent = all.find(e => e.id === id);
+  if (!ent) return;
+  ent.name = name;
+  if (state.supabase) {
+    await state.supabase.from('entities').update({ name }).eq('id', id);
+  }
+  saveLocalCache();
+  renderAll();
+  toast('تم التعديل');
+}
+
+async function deleteEntity(id) {
+  state.data.fulltime = state.data.fulltime.filter(e => e.id !== id);
+  state.data.freelance = state.data.freelance.filter(e => e.id !== id);
+  if (state.supabase) {
+    await state.supabase.from('entities').delete().eq('id', id);
+  }
+  saveLocalCache();
+  renderAll();
+  toast('تم الحذف');
+}
+
+async function addTask(entityId, taskData) {
+  const all = [...state.data.fulltime, ...state.data.freelance];
+  const ent = all.find(e => e.id === entityId);
+  if (!ent) return;
+  const task = {
+    id: uid(),
+    entity_id: entityId,
+    title: taskData.title,
+    description: taskData.description || null,
+    deadline: taskData.deadline || null,
+    priority: taskData.priority || 'medium',
+    price: taskData.price ? Number(taskData.price) : null,
+    completed: false,
+    created_at: new Date().toISOString(),
+  };
+  if (state.supabase) {
+    const { data, error } = await state.supabase.from('tasks').insert({
+      entity_id: entityId,
+      title: task.title,
+      description: task.description,
+      deadline: task.deadline,
+      priority: task.priority,
+      price: task.price,
+    }).select().single();
+    if (error) { toast('خطأ: '+error.message, 'error'); return; }
+    task.id = data.id;
+    task.created_at = data.created_at;
+  }
+  ent.tasks.push(task);
+  saveLocalCache();
+  renderAll();
+  toast('اتضاف التاسك ✅');
+}
+
+async function updateTask(taskId, updates) {
+  const all = [...state.data.fulltime, ...state.data.freelance];
+  for (const ent of all) {
+    const t = ent.tasks.find(x => x.id === taskId);
+    if (t) {
+      Object.assign(t, updates);
+      if (state.supabase) {
+        await state.supabase.from('tasks').update(updates).eq('id', taskId);
+      }
+      break;
+    }
+  }
+  saveLocalCache();
+  renderAll();
+}
+
+async function deleteTask(taskId) {
+  for (const ent of [...state.data.fulltime, ...state.data.freelance]) {
+    ent.tasks = ent.tasks.filter(t => t.id !== taskId);
+  }
+  if (state.supabase) {
+    await state.supabase.from('tasks').delete().eq('id', taskId);
+  }
+  saveLocalCache();
+  renderAll();
+  toast('اتمسح التاسك');
+}
+
+async function toggleTask(taskId) {
+  const all = [...state.data.fulltime, ...state.data.freelance];
+  for (const ent of all) {
+    const t = ent.tasks.find(x => x.id === taskId);
+    if (t) {
+      const newVal = !t.completed;
+      const updates = { completed: newVal, completed_at: newVal ? new Date().toISOString() : null };
+      Object.assign(t, updates);
+      if (state.supabase) {
+        await state.supabase.from('tasks').update(updates).eq('id', taskId);
+      }
+      break;
+    }
+  }
+  saveLocalCache();
+  renderAll();
+}
+
+// ============= FILTERING =============
+function filterTasks(tasks, filter, search) {
+  let arr = tasks;
+  if (search) {
+    const s = search.toLowerCase();
+    arr = arr.filter(t => (t.title||'').toLowerCase().includes(s) || (t.description||'').toLowerCase().includes(s));
+  }
+  switch (filter) {
+    case 'pending': arr = arr.filter(t => !t.completed); break;
+    case 'completed': arr = arr.filter(t => t.completed); break;
+    case 'overdue': arr = arr.filter(t => !t.completed && t.deadline && daysUntil(t.deadline) < 0); break;
+    case 'today': arr = arr.filter(t => !t.completed && t.deadline && daysUntil(t.deadline) === 0); break;
+    case 'week': arr = arr.filter(t => !t.completed && t.deadline && daysUntil(t.deadline) >= 0 && daysUntil(t.deadline) <= 7); break;
+  }
+  return arr;
+}
+
+// ============= RENDER =============
+function renderAll() {
+  renderEntities('fulltime');
+  renderEntities('freelance');
+  renderStats();
+  renderDashboard();
+}
+
+function renderEntities(kind) {
+  const list = kind === 'fulltime' ? state.data.fulltime : state.data.freelance;
+  const container = $(kind === 'fulltime' ? '#companiesList' : '#clientsList');
+  const filter = state.filters[kind];
+  const search = state.searches[kind];
+  const isFreelance = kind === 'freelance';
+
+  if (!list.length) {
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">${isFreelance ? '💼' : '🏢'}</div>
+        <h3>لسه ما ضيفتش ${isFreelance ? 'أي عميل' : 'أي شركة'}</h3>
+        <p>اضغط زرار "${isFreelance ? '+ إضافة عميل' : '+ إضافة شركة'}" تحت تبدأ.</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = list.map(ent => {
+    const filteredTasks = filterTasks(ent.tasks || [], filter, search);
+    const total = (ent.tasks||[]).length;
+    const done = (ent.tasks||[]).filter(t=>t.completed).length;
+    const pct = total ? Math.round(done/total*100) : 0;
+    const overdueCount = (ent.tasks||[]).filter(t=>!t.completed && t.deadline && daysUntil(t.deadline) < 0).length;
+    const totalPrice = isFreelance ? (ent.tasks||[]).reduce((s,t)=>s+(Number(t.price)||0),0) : 0;
+    const paidPrice = isFreelance ? (ent.tasks||[]).filter(t=>t.completed).reduce((s,t)=>s+(Number(t.price)||0),0) : 0;
+    const initial = (ent.name || '?').trim().charAt(0).toUpperCase();
+    const palette = PALETTE[ent.color_index ?? 0] || PALETTE[0];
+    const expanded = (search || filter !== 'all') ? true : ent._expanded !== false;
+
+    return `
+      <div class="entity-card ${expanded ? 'expanded' : ''}" data-id="${ent.id}" style="--entity-color:${palette.color};--entity-bg:${palette.bg}">
+        <div class="entity-header" data-toggle="${ent.id}">
+          <div class="entity-title-wrap">
+            <div class="entity-avatar">${escapeHtml(initial)}</div>
+            <div style="flex:1;min-width:0;">
+              <div class="entity-name">${escapeHtml(ent.name)}</div>
+              <div class="entity-meta">
+                <span>📋 ${total} تاسك</span>
+                <span>✅ ${done} منجز</span>
+                ${overdueCount ? `<span style="color:var(--danger)">🚨 ${overdueCount} متأخر</span>` : ''}
+                ${isFreelance && totalPrice ? `<span style="color:#a5b4fc">💰 ${totalPrice.toLocaleString('ar-EG')} (مستلم: ${paidPrice.toLocaleString('ar-EG')})</span>` : ''}
+              </div>
+            </div>
+          </div>
+          <div class="entity-actions" onclick="event.stopPropagation()">
+            <div class="progress-mini" title="${pct}%"><div class="progress-mini-fill" style="width:${pct}%"></div></div>
+            <button onclick="ui.editEntity('${ent.id}')" title="تعديل">✏️</button>
+            <button class="delete-btn" onclick="ui.deleteEntity('${ent.id}','${escapeHtml(ent.name).replace(/'/g,'&#39;')}')" title="حذف">🗑️</button>
+            <button onclick="ui.toggleEntity('${ent.id}')" title="عرض/إخفاء"><span class="toggle-icon">▼</span></button>
+          </div>
+        </div>
+        <div class="tasks-container">
+          ${filteredTasks.length === 0 && (ent.tasks||[]).length > 0
+            ? `<div style="text-align:center;color:var(--text-muted);padding:20px;font-size:14px">مفيش تاسك يطابق الفلتر</div>`
+            : filteredTasks.map(t => renderTask(t, isFreelance)).join('')}
+          <button class="add-task-btn" onclick="ui.addTask('${ent.id}', ${isFreelance})">+ إضافة تاسك</button>
+        </div>
+      </div>`;
+  }).join('');
+
+  // Wire up toggles
+  container.querySelectorAll('.entity-header').forEach(h => {
+    h.addEventListener('click', () => {
+      const id = h.dataset.toggle;
+      ui.toggleEntity(id);
+    });
+  });
+}
+
+function renderTask(t, isFreelance) {
+  const overdue = !t.completed && t.deadline && daysUntil(t.deadline) < 0;
+  return `
+    <div class="task ${t.completed ? 'completed' : ''} ${overdue ? 'overdue' : ''}" data-id="${t.id}">
+      <button class="task-checkbox ${t.completed ? 'checked' : ''}" onclick="ui.toggleTask('${t.id}')" title="علام إنه خلص">
+        ${t.completed ? '✓' : ''}
+      </button>
+      <div class="task-content">
+        <div class="task-title">${escapeHtml(t.title)}</div>
+        ${t.description ? `<div class="task-desc">${escapeHtml(t.description)}</div>` : ''}
+        <div class="task-meta">
+          ${deadlineBadge(t.deadline, t.completed)}
+          ${priorityBadge(t.priority)}
+          ${isFreelance ? priceBadge(t.price) : ''}
+        </div>
+      </div>
+      <div class="task-actions">
+        <button onclick="ui.editTask('${t.id}', ${isFreelance})" title="تعديل">✏️</button>
+        <button class="delete" onclick="ui.deleteTask('${t.id}','${escapeHtml(t.title).replace(/'/g,'&#39;')}')" title="حذف">🗑️</button>
+      </div>
+    </div>`;
+}
+
+function renderStats() {
+  ['fulltime','freelance'].forEach(kind => {
+    const list = state.data[kind];
+    const allTasks = list.flatMap(e => e.tasks||[]);
+    const done = allTasks.filter(t=>t.completed).length;
+    const pending = allTasks.length - done;
+    const overdue = allTasks.filter(t=>!t.completed && t.deadline && daysUntil(t.deadline) < 0).length;
+    const today = allTasks.filter(t=>!t.completed && t.deadline && daysUntil(t.deadline) === 0).length;
+    const earnings = kind==='freelance' ? allTasks.filter(t=>t.completed).reduce((s,t)=>s+(Number(t.price)||0),0) : null;
+    const pendingEarnings = kind==='freelance' ? allTasks.filter(t=>!t.completed).reduce((s,t)=>s+(Number(t.price)||0),0) : null;
+
+    const target = $(kind === 'fulltime' ? '#statsFulltime' : '#statsFreelance');
+    const entIcon = kind==='fulltime' ? '🏢' : '💼';
+    const entLabel = kind==='fulltime' ? 'الشركات' : 'العملاء';
+    target.innerHTML = `
+      <div class="stat-card" style="--accent-color:#3b82f6"><div class="stat-icon">${entIcon}</div><div class="stat-label">${entLabel}</div><div class="stat-value blue">${list.length}</div></div>
+      <div class="stat-card" style="--accent-color:#6366f1"><div class="stat-icon">📋</div><div class="stat-label">إجمالي التاسكات</div><div class="stat-value">${allTasks.length}</div></div>
+      <div class="stat-card" style="--accent-color:#10b981"><div class="stat-icon">✅</div><div class="stat-label">منجزة</div><div class="stat-value green">${done}</div></div>
+      <div class="stat-card" style="--accent-color:#f59e0b"><div class="stat-icon">⏳</div><div class="stat-label">متبقية</div><div class="stat-value yellow">${pending}</div></div>
+      <div class="stat-card" style="--accent-color:#ef4444"><div class="stat-icon">🚨</div><div class="stat-label">متأخرة</div><div class="stat-value red">${overdue}</div></div>
+      <div class="stat-card" style="--accent-color:#f59e0b"><div class="stat-icon">🔥</div><div class="stat-label">المستحق اليوم</div><div class="stat-value yellow">${today}</div></div>
+      ${earnings !== null ? `
+        <div class="stat-card" style="--accent-color:#10b981"><div class="stat-icon">💰</div><div class="stat-label">أرباح مستلمة</div><div class="stat-value green">${earnings.toLocaleString('ar-EG')}</div></div>
+        <div class="stat-card" style="--accent-color:#6366f1"><div class="stat-icon">💸</div><div class="stat-label">أرباح متبقية</div><div class="stat-value blue">${pendingEarnings.toLocaleString('ar-EG')}</div></div>
+      ` : ''}
+    `;
+  });
+}
+
+function renderDashboard() {
+  const allTasks = [
+    ...state.data.fulltime.flatMap(e => (e.tasks||[]).map(t => ({...t, _entity: e.name, _color: PALETTE[e.color_index??0]?.color, _kind:'fulltime'}))),
+    ...state.data.freelance.flatMap(e => (e.tasks||[]).map(t => ({...t, _entity: e.name, _color: PALETTE[e.color_index??0]?.color, _kind:'freelance'})))
+  ];
+  const done = allTasks.filter(t=>t.completed).length;
+  const overdue = allTasks.filter(t=>!t.completed && t.deadline && daysUntil(t.deadline) < 0);
+  const upcoming = allTasks.filter(t=>!t.completed && t.deadline && daysUntil(t.deadline) >= 0 && daysUntil(t.deadline) <= 7)
+    .sort((a,b)=>new Date(a.deadline)-new Date(b.deadline));
+
+  $('#statsOverall').innerHTML = `
+    <div class="stat-card" style="--accent-color:#6366f1"><div class="stat-icon">📋</div><div class="stat-label">إجمالي التاسكات</div><div class="stat-value">${allTasks.length}</div></div>
+    <div class="stat-card" style="--accent-color:#10b981"><div class="stat-icon">✅</div><div class="stat-label">منجزة</div><div class="stat-value green">${done}</div></div>
+    <div class="stat-card" style="--accent-color:#ef4444"><div class="stat-icon">🚨</div><div class="stat-label">متأخرة</div><div class="stat-value red">${overdue.length}</div></div>
+    <div class="stat-card" style="--accent-color:#f59e0b"><div class="stat-icon">📅</div><div class="stat-label">قريبة (أسبوع)</div><div class="stat-value yellow">${upcoming.length}</div></div>
+    <div class="stat-card" style="--accent-color:#3b82f6"><div class="stat-icon">🤝</div><div class="stat-label">شركات + عملاء</div><div class="stat-value blue">${state.data.fulltime.length + state.data.freelance.length}</div></div>
+  `;
+
+  const renderTaskRow = t => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px;border-bottom:1px solid var(--border)">
+      <div style="width:6px;height:32px;background:${t._color};border-radius:3px"></div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600">${escapeHtml(t.title)}</div>
+        <div style="font-size:12px;color:var(--text-muted)">${t._kind==='fulltime'?'🏢':'💼'} ${escapeHtml(t._entity)}</div>
+      </div>
+      ${deadlineBadge(t.deadline, t.completed)}
+    </div>`;
+
+  $('#upcomingTasks').innerHTML = upcoming.length ? upcoming.map(renderTaskRow).join('') : '<div style="color:var(--text-muted);padding:10px">مفيش تاسكات قريبة 🎉</div>';
+  $('#overdueTasks').innerHTML = overdue.length ? overdue.map(renderTaskRow).join('') : '<div style="color:var(--text-muted);padding:10px">مفيش تاسكات متأخرة 👍</div>';
+
+  // Monthly earnings
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const monthlyDone = state.data.freelance.flatMap(e => (e.tasks||[])
+    .filter(t => t.completed && t.completed_at && new Date(t.completed_at) >= monthStart)
+    .map(t => ({...t, _entity: e.name})));
+  const total = monthlyDone.reduce((s,t)=>s+(Number(t.price)||0),0);
+  $('#monthlyEarnings').textContent = total.toLocaleString('ar-EG') + ' ج.م';
+  $('#earningsBreakdown').innerHTML = monthlyDone.length
+    ? monthlyDone.map(t => `<div>• ${escapeHtml(t._entity)} – ${escapeHtml(t.title)}: <strong>${Number(t.price||0).toLocaleString('ar-EG')}</strong></div>`).join('')
+    : 'لسه ما خلصتش أي تاسك بسعر هذا الشهر.';
+}
+
+// ============= UI HANDLERS =============
+const ui = {
+  toggleEntity(id) {
+    const all = [...state.data.fulltime, ...state.data.freelance];
+    const ent = all.find(e => e.id === id);
+    if (!ent) return;
+    ent._expanded = ent._expanded === false ? true : false;
+    renderAll();
+  },
+
+  addCompany() { this._showEntityModal('company'); },
+  addClient() { this._showEntityModal('client'); },
+
+  _showEntityModal(type, existing) {
+    const isCompany = type === 'company';
+    showModal({
+      title: existing ? 'تعديل الاسم' : (isCompany ? 'إضافة شركة جديدة' : 'إضافة عميل جديد'),
+      body: `
+        <div class="form-group">
+          <label>${isCompany ? 'اسم الشركة' : 'اسم العميل'}</label>
+          <input type="text" id="entName" value="${existing ? escapeHtml(existing.name) : ''}" placeholder="${isCompany ? 'مثلاً: شركة كذا' : 'مثلاً: أحمد محمد'}" autofocus>
+        </div>
+      `,
+      actions: [
+        { label: 'إلغاء', class: 'btn-secondary', onClick: closeModal },
+        { label: existing ? 'حفظ' : 'إضافة', class: 'btn-primary flex', onClick: async () => {
+          const name = $('#entName').value.trim();
+          if (!name) return toast('اكتب اسم', 'error');
+          if (existing) await updateEntity(existing.id, name);
+          else await addEntity(type, name);
+          closeModal();
+        }}
+      ]
+    });
+    setTimeout(() => $('#entName')?.focus(), 50);
+  },
+
+  editEntity(id) {
+    const ent = [...state.data.fulltime, ...state.data.freelance].find(e => e.id === id);
+    if (!ent) return;
+    this._showEntityModal(ent.type, ent);
+  },
+
+  deleteEntity(id, name) {
+    showModal({
+      title: 'تأكيد الحذف',
+      body: `<p>هتمسح <strong>${escapeHtml(name)}</strong> وكل التاسكات اللي تحتها. متأكد؟</p>`,
+      actions: [
+        { label: 'إلغاء', class: 'btn-secondary', onClick: closeModal },
+        { label: 'حذف', class: 'btn-primary btn-danger flex', onClick: async () => {
+          await deleteEntity(id);
+          closeModal();
+        }}
+      ]
+    });
+  },
+
+  addTask(entityId, isFreelance) {
+    this._showTaskModal(entityId, isFreelance);
+  },
+
+  editTask(taskId, isFreelance) {
+    let task = null;
+    let entityId = null;
+    for (const ent of [...state.data.fulltime, ...state.data.freelance]) {
+      const t = ent.tasks.find(x => x.id === taskId);
+      if (t) { task = t; entityId = ent.id; break; }
+    }
+    if (!task) return;
+    this._showTaskModal(entityId, isFreelance, task);
+  },
+
+  _showTaskModal(entityId, isFreelance, existing) {
+    showModal({
+      title: existing ? 'تعديل التاسك' : 'تاسك جديد',
+      body: `
+        <div class="form-group">
+          <label>اسم التاسك *</label>
+          <input type="text" id="tskTitle" value="${existing ? escapeHtml(existing.title) : ''}" placeholder="مثلاً: مونتاج فيديو رقم 5" autofocus>
+        </div>
+        <div class="form-group">
+          <label>الوصف / تفاصيل</label>
+          <textarea id="tskDesc" placeholder="اكتب أي تفاصيل عن التاسك...">${existing ? escapeHtml(existing.description||'') : ''}</textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="form-group">
+            <label>الديدلاين</label>
+            <input type="date" id="tskDeadline" value="${existing && existing.deadline ? existing.deadline.slice(0,10) : ''}">
+          </div>
+          <div class="form-group">
+            <label>الأولوية</label>
+            <select id="tskPriority">
+              <option value="low" ${existing && existing.priority==='low'?'selected':''}>عادي</option>
+              <option value="medium" ${(!existing || existing.priority==='medium')?'selected':''}>متوسط</option>
+              <option value="high" ${existing && existing.priority==='high'?'selected':''}>عاجل 🔥</option>
+            </select>
+          </div>
+        </div>
+        ${isFreelance ? `
+          <div class="form-group">
+            <label>السعر (ج.م)</label>
+            <input type="number" id="tskPrice" min="0" step="0.01" value="${existing && existing.price ? existing.price : ''}" placeholder="مثلاً: 500">
+          </div>
+        ` : ''}
+      `,
+      actions: [
+        { label: 'إلغاء', class: 'btn-secondary', onClick: closeModal },
+        { label: existing ? 'حفظ' : 'إضافة', class: 'btn-primary flex', onClick: async () => {
+          const title = $('#tskTitle').value.trim();
+          if (!title) return toast('اكتب اسم التاسك', 'error');
+          const data = {
+            title,
+            description: $('#tskDesc').value.trim() || null,
+            deadline: $('#tskDeadline').value || null,
+            priority: $('#tskPriority').value,
+            price: isFreelance ? ($('#tskPrice').value || null) : null,
+          };
+          if (existing) await updateTask(existing.id, data);
+          else await addTask(entityId, data);
+          closeModal();
+        }}
+      ]
+    });
+    setTimeout(() => $('#tskTitle')?.focus(), 50);
+  },
+
+  deleteTask(taskId, name) {
+    showModal({
+      title: 'تأكيد الحذف',
+      body: `<p>هتمسح التاسك "<strong>${escapeHtml(name)}</strong>". متأكد؟</p>`,
+      actions: [
+        { label: 'إلغاء', class: 'btn-secondary', onClick: closeModal },
+        { label: 'حذف', class: 'btn-primary btn-danger flex', onClick: async () => {
+          await deleteTask(taskId);
+          closeModal();
+        }}
+      ]
+    });
+  },
+
+  toggleTask(taskId) { toggleTask(taskId); }
+};
+
+// Make ui global so onclick attrs find it
+window.ui = ui;
+
+// ============= MODAL =============
+function showModal({ title, body, actions }) {
+  $('#modalTitle').textContent = title;
+  $('#modalBody').innerHTML = body;
+  $('#modalActions').innerHTML = '';
+  actions.forEach(a => {
+    const b = document.createElement('button');
+    b.className = a.class;
+    b.textContent = a.label;
+    b.onclick = a.onClick;
+    $('#modalActions').appendChild(b);
+  });
+  $('#modal').classList.add('active');
+}
+function closeModal() { $('#modal').classList.remove('active'); }
+$('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+
+// ============= TABS =============
+$$('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    $$('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    state.currentTab = tab.dataset.tab;
+    $$('.tab-content').forEach(c => c.style.display = 'none');
+    $('#tab-' + state.currentTab).style.display = 'block';
+  });
+});
+
+// ============= EVENT WIRING =============
+$('#addCompanyBtn').onclick = () => ui.addCompany();
+$('#addClientBtn').onclick = () => ui.addClient();
+$('#searchFulltime').oninput = e => { state.searches.fulltime = e.target.value; renderEntities('fulltime'); };
+$('#searchFreelance').oninput = e => { state.searches.freelance = e.target.value; renderEntities('freelance'); };
+$('#filterFulltime').onchange = e => { state.filters.fulltime = e.target.value; renderEntities('fulltime'); };
+$('#filterFreelance').onchange = e => { state.filters.freelance = e.target.value; renderEntities('freelance'); };
+
+// Theme (light is default, toggle to dark)
+$('#themeBtn').onclick = () => {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  $('#themeBtn').textContent = isDark ? '☀️' : '🌙';
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+};
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+  $('#themeBtn').textContent = '☀️';
+}
+
+// Save Supabase config
+$('#saveConfigBtn').onclick = async () => {
+  const url = $('#supabaseUrl').value.trim();
+  const key = $('#supabaseKey').value.trim();
+  if (!url || !key) return toast('املأ الحقلين', 'error');
+  localStorage.setItem('sb_url', url);
+  localStorage.setItem('sb_key', key);
+  await initSupabase();
+  if (state.connected) toast('تم الاتصال ✅');
+};
+
+// SQL code
+$('#sqlCode').textContent = SQL_SETUP;
+$('#copySqlBtn').onclick = () => {
+  navigator.clipboard.writeText(SQL_SETUP).then(() => toast('اتنسخ ✅'));
+};
+
+// Export / Import
+$('#exportBtn').onclick = () => exportData();
+$('#exportJsonBtn').onclick = () => exportData();
+$('#importJsonInput').onchange = e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      if (data.fulltime && data.freelance) {
+        state.data = data;
+        saveLocalCache();
+        renderAll();
+        toast('تم الاستيراد ✅');
+      } else throw new Error('ملف غير صالح');
+    } catch (err) { toast('فشل الاستيراد: ' + err.message, 'error'); }
+  };
+  r.readAsText(f);
+};
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(state.data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `work-tracker-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('تم التصدير ✅');
+}
+
+// ============= INIT =============
+loadLocalCache();
+renderAll();
+initSupabase();
+
+// Reload UI every minute to refresh deadline badges
+setInterval(() => renderAll(), 60000);
+</script>
+</body>
+</html>

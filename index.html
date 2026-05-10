@@ -291,40 +291,37 @@
   .btn-primary:active { transform: translateY(0); }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  /* Entity (Company/Client) cards - MONOCHROMATIC THEME */
-  .entities { display: flex; flex-direction: column; gap: 18px; }
+  /* Entity (Company/Client) cards - BOLD MONOCHROMATIC THEME */
+  .entities { display: flex; flex-direction: column; gap: 20px; }
   .entity-card {
     --c: var(--entity-color, #6366f1);
-    --c-50: color-mix(in srgb, var(--c) 4%, #ffffff);
-    --c-100: color-mix(in srgb, var(--c) 10%, #ffffff);
-    --c-200: color-mix(in srgb, var(--c) 22%, #ffffff);
-    --c-300: color-mix(in srgb, var(--c) 40%, #ffffff);
-    --c-700: color-mix(in srgb, var(--c) 80%, #000000);
-    background: linear-gradient(135deg, var(--c-50) 0%, #ffffff 100%);
-    border: 1px solid color-mix(in srgb, var(--c) 25%, var(--border));
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--c) 22%, #ffffff) 0%,
+      color-mix(in srgb, var(--c) 10%, #ffffff) 100%);
+    border: 2px solid color-mix(in srgb, var(--c) 55%, #ffffff);
     border-radius: var(--radius-lg);
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 14px color-mix(in srgb, var(--c) 12%, transparent), var(--shadow-sm);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--c) 22%, transparent), 0 2px 4px color-mix(in srgb, var(--c) 10%, transparent);
     position: relative;
   }
   body.dark .entity-card {
-    --c-50: color-mix(in srgb, var(--c) 12%, var(--bg-soft));
-    --c-100: color-mix(in srgb, var(--c) 22%, var(--bg-soft));
-    --c-200: color-mix(in srgb, var(--c) 35%, var(--bg-soft));
-    background: linear-gradient(135deg, var(--c-50) 0%, var(--bg-soft) 100%);
-    border-color: color-mix(in srgb, var(--c) 35%, var(--border));
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--c) 30%, var(--bg-soft)) 0%,
+      color-mix(in srgb, var(--c) 14%, var(--bg-soft)) 100%);
+    border-color: color-mix(in srgb, var(--c) 55%, var(--border));
   }
   .entity-card::before {
     content: '';
     position: absolute;
     top: 0; right: 0; bottom: 0;
-    width: 5px;
-    background: linear-gradient(180deg, var(--c), color-mix(in srgb, var(--c) 50%, transparent));
+    width: 7px;
+    background: linear-gradient(180deg, var(--c), color-mix(in srgb, var(--c) 60%, #000));
   }
   .entity-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px color-mix(in srgb, var(--c) 22%, transparent), var(--shadow-lg);
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px color-mix(in srgb, var(--c) 35%, transparent), 0 4px 8px color-mix(in srgb, var(--c) 15%, transparent);
+    border-color: color-mix(in srgb, var(--c) 70%, #ffffff);
   }
   .entity-header {
     padding: 22px 26px;
@@ -333,26 +330,30 @@
     align-items: center;
     cursor: pointer;
     background: linear-gradient(90deg,
-      color-mix(in srgb, var(--c) 18%, #ffffff) 0%,
-      color-mix(in srgb, var(--c) 8%, #ffffff) 50%,
-      color-mix(in srgb, var(--c) 3%, #ffffff) 100%);
+      color-mix(in srgb, var(--c) 55%, #ffffff) 0%,
+      color-mix(in srgb, var(--c) 30%, #ffffff) 60%,
+      color-mix(in srgb, var(--c) 18%, #ffffff) 100%);
     flex-wrap: wrap;
     gap: 14px;
     transition: all 0.2s;
-    border-bottom: 1px solid color-mix(in srgb, var(--c) 18%, var(--border));
+    border-bottom: 2px solid color-mix(in srgb, var(--c) 45%, #ffffff);
   }
   body.dark .entity-header {
     background: linear-gradient(90deg,
-      color-mix(in srgb, var(--c) 28%, var(--bg-soft)) 0%,
-      color-mix(in srgb, var(--c) 14%, var(--bg-soft)) 60%,
-      var(--bg-soft) 100%);
+      color-mix(in srgb, var(--c) 60%, var(--bg-soft)) 0%,
+      color-mix(in srgb, var(--c) 30%, var(--bg-soft)) 60%,
+      color-mix(in srgb, var(--c) 18%, var(--bg-soft)) 100%);
   }
   .entity-header:hover {
     background: linear-gradient(90deg,
-      color-mix(in srgb, var(--c) 24%, #ffffff) 0%,
-      color-mix(in srgb, var(--c) 12%, #ffffff) 50%,
-      color-mix(in srgb, var(--c) 5%, #ffffff) 100%);
+      color-mix(in srgb, var(--c) 65%, #ffffff) 0%,
+      color-mix(in srgb, var(--c) 38%, #ffffff) 60%,
+      color-mix(in srgb, var(--c) 22%, #ffffff) 100%);
   }
+  .entity-name { color: color-mix(in srgb, var(--c) 80%, #000) !important; }
+  body.dark .entity-name { color: color-mix(in srgb, var(--c) 30%, #ffffff) !important; }
+  .entity-meta { color: color-mix(in srgb, var(--c) 60%, #000) !important; font-weight: 700 !important; }
+  body.dark .entity-meta { color: color-mix(in srgb, var(--c) 50%, #ffffff) !important; }
   .entity-title-wrap {
     display: flex;
     align-items: center;
@@ -439,19 +440,20 @@
   .progress-mini {
     width: 90px;
     height: 8px;
-    background: var(--bg-subtle);
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    background: color-mix(in srgb, var(--c) 25%, #ffffff);
+    border: 1px solid color-mix(in srgb, var(--c) 40%, #ffffff);
+    border-radius: 5px;
     overflow: hidden;
     position: relative;
   }
   .progress-mini-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--entity-color, #6366f1), color-mix(in srgb, var(--entity-color, #6366f1) 70%, #fff));
+    background: linear-gradient(90deg, var(--c), color-mix(in srgb, var(--c) 70%, #000));
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 3px;
+    border-radius: 4px;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 0 8px color-mix(in srgb, var(--c) 50%, transparent);
   }
   .progress-mini-fill::after {
     content: '';
@@ -463,10 +465,10 @@
   .tasks-container {
     padding: 4px 26px 24px 26px;
     display: none;
-    background: color-mix(in srgb, var(--c) 2%, #ffffff);
+    background: color-mix(in srgb, var(--c) 12%, #ffffff);
     margin-top: 0;
   }
-  body.dark .tasks-container { background: color-mix(in srgb, var(--c) 8%, var(--bg-subtle)); }
+  body.dark .tasks-container { background: color-mix(in srgb, var(--c) 18%, var(--bg-subtle)); }
   .entity-card.expanded .tasks-container { display: block; padding-top: 20px; }
   .entity-card.expanded .toggle-icon { transform: rotate(180deg); }
   .toggle-icon { transition: transform 0.3s; display: inline-block; font-size: 11px; }
@@ -476,29 +478,29 @@
     gap: 14px;
     align-items: flex-start;
     padding: 16px 18px;
-    background: linear-gradient(135deg, #ffffff 0%, color-mix(in srgb, var(--c) 4%, #ffffff) 100%);
-    border: 1px solid color-mix(in srgb, var(--c) 18%, var(--border));
-    border-right: 3px solid color-mix(in srgb, var(--c) 50%, transparent);
+    background: linear-gradient(135deg, #ffffff 0%, color-mix(in srgb, var(--c) 8%, #ffffff) 100%);
+    border: 2px solid color-mix(in srgb, var(--c) 35%, #ffffff);
+    border-right: 5px solid var(--c);
     border-radius: 14px;
     margin-bottom: 10px;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 6px color-mix(in srgb, var(--c) 8%, transparent);
+    box-shadow: 0 3px 10px color-mix(in srgb, var(--c) 14%, transparent);
   }
   body.dark .task {
-    background: linear-gradient(135deg, var(--bg-card) 0%, color-mix(in srgb, var(--c) 12%, var(--bg-card)) 100%);
-    border-color: color-mix(in srgb, var(--c) 25%, var(--border));
+    background: linear-gradient(135deg, var(--bg-card) 0%, color-mix(in srgb, var(--c) 20%, var(--bg-card)) 100%);
+    border-color: color-mix(in srgb, var(--c) 40%, var(--border));
   }
   .task:hover {
     border-color: var(--c);
     border-right-color: var(--c);
-    transform: translateX(-3px);
-    box-shadow: 0 6px 16px color-mix(in srgb, var(--c) 18%, transparent);
+    transform: translateX(-4px);
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--c) 28%, transparent);
   }
   .task.completed {
-    opacity: 0.6;
-    background: color-mix(in srgb, var(--c) 6%, #f8fafc);
+    opacity: 0.55;
+    background: color-mix(in srgb, var(--c) 14%, #ffffff);
   }
-  body.dark .task.completed { background: color-mix(in srgb, var(--c) 10%, var(--bg-subtle)); }
+  body.dark .task.completed { background: color-mix(in srgb, var(--c) 18%, var(--bg-subtle)); }
   .task.completed .task-title { text-decoration: line-through; color: var(--text-muted); }
   .task.overdue {
     border-color: rgba(239,68,68,0.5);
@@ -640,9 +642,9 @@
   .add-task-btn {
     width: 100%;
     padding: 14px;
-    border: 2px dashed var(--border-strong);
+    border: 2px dashed color-mix(in srgb, var(--c) 50%, #ffffff);
     background: transparent;
-    color: var(--text-muted);
+    color: color-mix(in srgb, var(--c) 70%, #000);
     border-radius: 12px;
     cursor: pointer;
     font-family: inherit;
@@ -651,10 +653,11 @@
     transition: all 0.2s;
     margin-top: 4px;
   }
+  body.dark .add-task-btn { color: color-mix(in srgb, var(--c) 35%, #ffffff); border-color: color-mix(in srgb, var(--c) 50%, transparent); }
   .add-task-btn:hover {
-    border-color: var(--entity-color, var(--accent));
-    color: var(--entity-color, var(--accent));
-    background: var(--bg-soft);
+    border-color: var(--c);
+    color: var(--c);
+    background: color-mix(in srgb, var(--c) 8%, #ffffff);
   }
 
   /* Empty state */

@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>متابع الشغل والتاسكات</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='50%25' stop-color='%23a855f7'/%3E%3Cstop offset='100%25' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M20 16h18a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4H20a4 4 0 0 1-4-4V20a4 4 0 0 1 4-4z' fill='white' opacity='0.95'/%3E%3Crect x='22' y='22' width='14' height='2.5' rx='1.25' fill='%236366f1'/%3E%3Crect x='22' y='28' width='10' height='2.5' rx='1.25' fill='%23a855f7'/%3E%3Crect x='22' y='34' width='12' height='2.5' rx='1.25' fill='%23ec4899'/%3E%3Cpath d='M22 42l3 3 7-7' stroke='%2310b981' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#6366f1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -345,7 +347,15 @@
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
   /* Entity (Company/Client) cards - GLASS MORPHISM PREMIUM */
-  .entities { display: flex; flex-direction: column; gap: 22px; }
+  .entities {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 22px;
+    align-items: start;
+  }
+  @media (max-width: 500px) {
+    .entities { grid-template-columns: 1fr; }
+  }
   .entity-card {
     --c: var(--entity-color, #6366f1);
     background:
@@ -568,37 +578,41 @@
     display: flex;
     gap: 14px;
     align-items: flex-start;
-    padding: 16px 18px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, color-mix(in srgb, var(--c) 12%, rgba(255,255,255,0.55)) 100%);
-    backdrop-filter: blur(14px) saturate(180%);
-    -webkit-backdrop-filter: blur(14px) saturate(180%);
-    border: 1px solid color-mix(in srgb, var(--c) 30%, rgba(255,255,255,0.6));
+    padding: 18px 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px) saturate(200%);
+    -webkit-backdrop-filter: blur(16px) saturate(200%);
+    border: 1px solid rgba(255,255,255,0.95);
     border-right: 4px solid var(--c);
     border-radius: 16px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow:
-      0 4px 12px color-mix(in srgb, var(--c) 14%, transparent),
-      inset 0 1px 0 rgba(255,255,255,0.7);
+      0 6px 18px color-mix(in srgb, var(--c) 18%, transparent),
+      0 2px 4px rgba(15,23,42,0.05),
+      inset 0 1px 0 rgba(255,255,255,1);
   }
   body.dark .task {
-    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, color-mix(in srgb, var(--c) 22%, rgba(255,255,255,0.03)) 100%);
-    border-color: color-mix(in srgb, var(--c) 35%, rgba(255,255,255,0.1));
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.06);
+    background: rgba(30, 35, 65, 0.85);
+    border-color: rgba(255,255,255,0.12);
+    box-shadow:
+      0 6px 18px rgba(0,0,0,0.3),
+      0 2px 4px rgba(0,0,0,0.2),
+      inset 0 1px 0 rgba(255,255,255,0.06);
   }
   .task:hover {
     border-color: var(--c);
     border-right-color: var(--c);
     transform: translateX(-5px) translateY(-2px);
     box-shadow:
-      0 12px 28px color-mix(in srgb, var(--c) 28%, transparent),
-      inset 0 1px 0 rgba(255,255,255,0.8);
+      0 14px 32px color-mix(in srgb, var(--c) 32%, transparent),
+      inset 0 1px 0 rgba(255,255,255,1);
   }
   .task.completed {
-    opacity: 0.6;
-    background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, color-mix(in srgb, var(--c) 8%, rgba(255,255,255,0.3)) 100%);
+    opacity: 0.55;
+    background: rgba(248, 250, 252, 0.85);
   }
-  body.dark .task.completed { background: rgba(255,255,255,0.03); }
+  body.dark .task.completed { background: rgba(255,255,255,0.04); }
   .task.completed .task-title { text-decoration: line-through; color: var(--text-muted); }
   .task.overdue {
     border-color: rgba(239,68,68,0.5);
@@ -650,12 +664,94 @@
     white-space: pre-wrap;
     line-height: 1.6;
   }
+  .task-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .link-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--c) 14%, #ffffff),
+      color-mix(in srgb, var(--c) 22%, #ffffff));
+    border: 1px solid color-mix(in srgb, var(--c) 30%, #ffffff);
+    color: color-mix(in srgb, var(--c) 75%, #000);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 0.2s;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  body.dark .link-chip {
+    background: color-mix(in srgb, var(--c) 22%, rgba(255,255,255,0.06));
+    border-color: color-mix(in srgb, var(--c) 40%, transparent);
+    color: color-mix(in srgb, var(--c) 40%, #ffffff);
+  }
+  .link-chip:hover {
+    background: var(--c);
+    color: white;
+    border-color: var(--c);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px color-mix(in srgb, var(--c) 35%, transparent);
+  }
+  .link-chip-icon { font-size: 11px; opacity: 0.8; }
+
   .task-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
     font-size: 12px;
   }
+
+  /* Link rows in modal */
+  .links-editor { display: flex; flex-direction: column; gap: 8px; }
+  .link-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .link-row input {
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+  }
+  .link-row .name-input { flex: 1; min-width: 80px; }
+  .link-row .url-input { flex: 2; min-width: 120px; direction: ltr; text-align: left; }
+  .link-row .remove-link-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(239,68,68,0.3);
+    background: rgba(239,68,68,0.08);
+    color: var(--danger);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+  .link-row .remove-link-btn:hover { background: var(--danger); color: white; }
+  .add-link-btn {
+    width: 100%;
+    padding: 10px;
+    border: 1.5px dashed rgba(99,102,241,0.4);
+    background: transparent;
+    color: var(--accent);
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+  .add-link-btn:hover { background: rgba(99,102,241,0.08); border-style: solid; }
   .badge {
     padding: 5px 11px;
     border-radius: 8px;
@@ -1295,10 +1391,14 @@ create table if not exists tasks (
   deadline date,
   priority text default 'medium' check (priority in ('low','medium','high')),
   price numeric,
+  links jsonb default '[]'::jsonb,
   completed boolean default false,
   completed_at timestamptz,
   created_at timestamptz default now()
 );
+
+-- لو الجدول موجود بالفعل بدون عمود links نفّذ ده:
+alter table tasks add column if not exists links jsonb default '[]'::jsonb;
 
 -- مهم: لو هتستخدم anon key بس وعايز كل حد يدخل صفحته يشوف بياناته:
 -- اعمل auth أو سيب الـ RLS مقفول مع anon key خاص بيك (المشروع شخصي)
@@ -1484,6 +1584,7 @@ async function addTask(entityId, taskData) {
     deadline: taskData.deadline || null,
     priority: taskData.priority || 'medium',
     price: taskData.price ? Number(taskData.price) : null,
+    links: Array.isArray(taskData.links) ? taskData.links : [],
     completed: false,
     created_at: new Date().toISOString(),
   };
@@ -1495,6 +1596,7 @@ async function addTask(entityId, taskData) {
       deadline: task.deadline,
       priority: task.priority,
       price: task.price,
+      links: task.links,
     }).select().single();
     if (error) { toast('خطأ: '+error.message, 'error'); return; }
     task.id = data.id;
@@ -1654,6 +1756,14 @@ function renderEntities(kind) {
 
 function renderTask(t, isFreelance) {
   const overdue = !t.completed && t.deadline && daysUntil(t.deadline) < 0;
+  const links = Array.isArray(t.links) ? t.links : [];
+  const linksHtml = links.length ? `
+    <div class="task-links">
+      ${links.map(l => `<a class="link-chip" href="${escapeHtml(l.url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="${escapeHtml(l.url)}">
+        <span class="link-chip-icon">🔗</span>${escapeHtml(l.name || l.url)}
+      </a>`).join('')}
+    </div>
+  ` : '';
   return `
     <div class="task ${t.completed ? 'completed' : ''} ${overdue ? 'overdue' : ''}" data-id="${t.id}">
       <button class="task-checkbox ${t.completed ? 'checked' : ''}" onclick="ui.toggleTask('${t.id}')" title="علام إنه خلص">
@@ -1662,6 +1772,7 @@ function renderTask(t, isFreelance) {
       <div class="task-content">
         <div class="task-title">${escapeHtml(t.title)}</div>
         ${t.description ? `<div class="task-desc">${escapeHtml(t.description)}</div>` : ''}
+        ${linksHtml}
         <div class="task-meta">
           ${deadlineBadge(t.deadline, t.completed)}
           ${priorityBadge(t.priority)}
@@ -1917,6 +2028,13 @@ const ui = {
   },
 
   _showTaskModal(entityId, isFreelance, existing) {
+    const existingLinks = existing && Array.isArray(existing.links) ? existing.links : [];
+    const linkRowHtml = (name = '', url = '') => `
+      <div class="link-row">
+        <input type="text" class="name-input" placeholder="اسم الرابط (مثلاً: داتا)" value="${escapeHtml(name)}">
+        <input type="url" class="url-input" placeholder="https://..." value="${escapeHtml(url)}">
+        <button type="button" class="remove-link-btn" title="حذف">×</button>
+      </div>`;
     showModal({
       title: existing ? 'تعديل التاسك' : 'تاسك جديد',
       body: `
@@ -1948,18 +2066,35 @@ const ui = {
             <input type="number" id="tskPrice" min="0" step="0.01" value="${existing && existing.price ? existing.price : ''}" placeholder="مثلاً: 500">
           </div>
         ` : ''}
+        <div class="form-group">
+          <label>🔗 روابط (اختياري) — مثلاً داتا، ريفرنس، ملف بريف...</label>
+          <div class="links-editor" id="linksEditor">
+            ${existingLinks.length ? existingLinks.map(l => linkRowHtml(l.name, l.url)).join('') : ''}
+          </div>
+          <button type="button" class="add-link-btn" id="addLinkBtn">+ إضافة رابط</button>
+        </div>
       `,
       actions: [
         { label: 'إلغاء', class: 'btn-secondary', onClick: closeModal },
         { label: existing ? 'حفظ' : 'إضافة', class: 'btn-primary flex', onClick: async () => {
           const title = $('#tskTitle').value.trim();
           if (!title) return toast('اكتب اسم التاسك', 'error');
+          // Collect links
+          const links = [];
+          $$('#linksEditor .link-row').forEach(row => {
+            const name = row.querySelector('.name-input').value.trim();
+            let url = row.querySelector('.url-input').value.trim();
+            if (!url) return;
+            if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+            links.push({ name: name || url, url });
+          });
           const data = {
             title,
             description: $('#tskDesc').value.trim() || null,
             deadline: $('#tskDeadline').value || null,
             priority: $('#tskPriority').value,
             price: isFreelance ? ($('#tskPrice').value || null) : null,
+            links,
           };
           if (existing) await updateTask(existing.id, data);
           else await addTask(entityId, data);
@@ -1968,6 +2103,22 @@ const ui = {
       ]
     });
     setTimeout(() => $('#tskTitle')?.focus(), 50);
+
+    // Wire up links editor
+    const editor = $('#linksEditor');
+    const addLinkRow = (name = '', url = '') => {
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = linkRowHtml(name, url);
+      const row = wrapper.firstElementChild;
+      row.querySelector('.remove-link-btn').onclick = () => row.remove();
+      editor.appendChild(row);
+      row.querySelector('.name-input').focus();
+    };
+    // Wire existing rows' delete buttons
+    $$('#linksEditor .link-row .remove-link-btn').forEach(btn => {
+      btn.onclick = () => btn.closest('.link-row').remove();
+    });
+    $('#addLinkBtn').onclick = () => addLinkRow();
   },
 
   deleteTask(taskId, name) {
